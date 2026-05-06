@@ -3,10 +3,9 @@
 This repository contains the code for the paper:
 
 **Low-Rank Adaptation for Critic Learning in Off-Policy Reinforcement Learning**  
-Yuan Zhuang, Yuexin Bian, Sihong He, Jie Feng, Qing Su, Songyang Han, Jonathan Petit, Shihao Ji, Yuanyuan Shi, Fei Miao  
 arXiv: https://arxiv.org/abs/2604.18978
 
-The implementation applies LoRA to critic residual-block weights in three off-policy RL settings. Each method folder contains one example script for reproducing the main LoRA configuration.
+The implementation applies LoRA to critic residual-block weights in three off-policy RL settings. Each method folder contains one example script for the main LoRA configuration.
 
 ## Repository Structure
 
@@ -89,7 +88,3 @@ CONDA_ENV=simba_lora GPU=0 ENV_NAME=humanoid-run SEED=0 WANDB_MODE=offline \
       url={https://arxiv.org/abs/2604.18978}, 
 }
 ```
-
-## Licenses
-
-This repository contains code derived from multiple upstream baselines. Please keep the license files in each baseline-derived folder when redistributing the code.
