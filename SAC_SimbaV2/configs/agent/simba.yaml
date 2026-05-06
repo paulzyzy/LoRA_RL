@@ -1,0 +1,38 @@
+##################################################################################
+# Simba
+##################################################################################
+
+agent_type: 'simba'
+
+seed: ${seed}
+normalize_observation: true
+normalize_reward: false
+normalized_g_max: 0.0
+
+load_only_param: true    # do not load optimizer
+load_param_key: null     # load designated key
+load_observation_normalizer: true
+load_reward_normalizer: true
+
+learning_rate_init: 1e-4
+learning_rate_end: 1e-4
+learning_rate_decay_rate: 1.0 
+learning_rate_decay_step: ${eval:'int(${agent.learning_rate_decay_rate} * ${num_interaction_steps} * ${updates_per_interaction_step})'}
+weight_decay: 1e-2
+
+actor_num_blocks: 1
+actor_hidden_dim: 128
+actor_bc_alpha: 0.0
+
+critic_use_cdq: ${env.episodic}
+critic_num_blocks: 2
+critic_hidden_dim: 512
+
+target_tau: 0.005
+
+temp_initial_value: 0.01
+temp_target_entropy: null # entropy_coef * action_dim
+temp_target_entropy_coef: -0.5
+
+gamma: ${gamma}
+n_step: ${n_step}

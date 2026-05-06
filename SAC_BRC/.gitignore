@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.egg
+dist/
+build/
+
+# Wandb
+wandb/
+
+# Model checkpoints / saved params
+*.txt
+!requirements.txt
+!LICENSE
+
+# Replay buffer saves
+buffer/
+buffer_info
+
+# Env assets (large, not needed in repo)
+dex_envs/
+
+# Training artifacts
+*.npy
+*.npz
+*.pkl
+*.pickle
+*.mp4
+
+# Conda / venv
+.conda/
+venv/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

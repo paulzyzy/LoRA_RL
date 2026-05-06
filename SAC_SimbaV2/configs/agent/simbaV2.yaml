@@ -1,0 +1,97 @@
+##################################################################################
+# SAC with Hyper-Simba architecture
+##################################################################################
+
+agent_type: 'simbaV2'
+
+seed: ${seed}
+normalize_observation: true
+normalize_reward: true
+normalized_g_max: 5.0
+
+load_only_param: true    # do not load optimizer
+load_param_key: null     # load designated key
+load_observation_normalizer: true
+load_reward_normalizer: true
+
+learning_rate_init: 1e-4
+learning_rate_end: 5e-5
+lora_learning_rate_init: ${agent.learning_rate_init}
+lora_learning_rate_end: ${agent.learning_rate_end}
+learning_rate_decay_rate: 1.0
+learning_rate_decay_step: ${eval:'int(${agent.learning_rate_decay_rate} * ${num_interaction_steps} * ${updates_per_interaction_step})'}
+lora_alpha: 96
+# Effective kernel init scale in layer is sqrt(kernel_init_scale).
+# 0.5 -> sqrt(0.5) = 1/sqrt(2)
+kernel_init_scale: 0.5
+lora_lr_schedule: 'cosine'  # 'cosine' or 'linear'
+
+actor_num_blocks: 1
+actor_hidden_dim: 128
+actor_c_shift: 3.0
+actor_scaler_init: ${eval:'math.sqrt(2 / ${agent.actor_hidden_dim})'}
+actor_scaler_scale: ${eval:'math.sqrt(2 / ${agent.actor_hidden_dim})'}
+actor_alpha_init: ${eval:'1 / (${agent.actor_num_blocks} + 1)'}
+actor_alpha_scale: ${eval:'1 / math.sqrt(${agent.actor_hidden_dim})'}
+actor_bc_alpha: 0.0
+
+actor_weight_L2norm: true
+actor_LoRA_weight_decay: 2e-4
+actor_low_rank:
+  enable: false
+  rank: 96
+  A_init: 'normal'
+  B_init: 'normal'
+
+actor_encoder_low_rank:
+  enable: false
+  rank: 96
+  A_init: 'normal'
+  B_init: 'normal'
+
+actor_head_low_rank:
+  enable: false
+  rank: [96, 96]
+  A_init: 'normal'
+  B_init: 'normal'
+
+critic_use_cdq: ${env.episodic}
+critic_num_blocks: 2
+critic_hidden_dim: 512
+critic_c_shift: 3.0
+critic_num_bins: 101
+critic_scaler_init: ${eval:'math.sqrt(2 / ${agent.critic_hidden_dim})'}
+critic_scaler_scale: ${eval:'math.sqrt(2 / ${agent.critic_hidden_dim})'}
+critic_min_v: ${eval:'-${agent.normalized_g_max}'}
+critic_max_v: ${eval:'${agent.normalized_g_max}'}
+critic_alpha_init: ${eval:'1 / (${agent.critic_num_blocks} + 1)'}
+critic_alpha_scale: ${eval:'1 / math.sqrt(${agent.critic_hidden_dim})'}
+
+critic_weight_L2norm: true
+critic_LoRA_weight_decay: 2e-4
+critic_low_rank:
+  enable: false
+  rank: 96
+  A_init: 'normal'
+  B_init: 'normal'
+
+critic_encoder_low_rank:
+  enable: false
+  rank: 96
+  A_init: 'normal'
+  B_init: 'normal'
+
+critic_head_low_rank:
+  enable: false
+  rank: [96, 96]
+  A_init: 'normal'
+  B_init: 'normal'
+
+target_tau: 0.005
+
+temp_initial_value: 0.01
+temp_target_entropy: null # entropy_coef * action_dim
+temp_target_entropy_coef: -0.5
+
+gamma: ${gamma}
+n_step: ${n_step}
