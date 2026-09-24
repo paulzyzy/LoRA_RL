@@ -1,4 +1,4 @@
-# Low-Rank Adaptation for Critic Learning in Off-Policy Reinforcement Learning
+# Low-Rank Adaptation for Critic Learning in Off-Policy Reinforcement Learning (NeurIPS 2026)
 
 This repository contains the code for the paper:
 
